@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ziel</title>
+    <style>
+        #results li {
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
     <h1>Ziel</h1>
 
     <input type="text" id="query" placeholder="Adresse oder Ort eingeben">
     <button id="search">Suchen</button>
+    <ul id="results"></ul>
+    <p id="selected">Kein Ziel gewählt</p>
 
     <script src="app.js"></script>
 
 </body>
+
 </html>
