@@ -1,5 +1,6 @@
 const queryInput = document.getElementById("query");
 const searchButton = document.getElementById("search");
+const resultsList = document.getElementById("results")
 
 searchButton.addEventListener("click", async () => {
     const query = queryInput.value.trim();
@@ -8,9 +9,16 @@ searchButton.addEventListener("click", async () => {
     const response = await fetch (url)
     const data = await response.json();
     
-    console.log(data)
+    resultsList.innerHTML = "";
+    for (const feature of data.features) {
+        const [lon, lat] = feature.geometry.coordinates;
+        const name = feature.properties.name;
 
-    const [lon, lat] = data.features[0].geometry.coordinates;
-    console.log("lat:", lat, "lon:", lon);
+        const item = document.createElement("li");
+        item.textContent = `${name} (${lat}, ${lon})`;
+        resultsList.appendChild(item);
+    }
+
+
 })
 
