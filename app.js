@@ -16,7 +16,7 @@ function toPlace(feature) { // GeoJSON-Reihenfolge umgedrehen
 
 async function searchPlaces(query) { 
     const response = await fetch(buildGeocodeUrl(query));;
-    const data = await response.json;
+    const data = await response.json();
     return data.features.map(toPlace);
 }
 
@@ -38,6 +38,8 @@ function renderPlaces(places) {
 
 searchButton.addEventListener("click", async () => {
     const query = queryInput.value.trim();
+    if (query === "") return;
+
     const places = await searchPlaces(query);
     renderPlaces(places);
 });
