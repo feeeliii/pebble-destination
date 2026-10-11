@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert";
-import { buildGeocodeUrl, toPlace } from "./geocode.js";
+import { buildGeocodeUrl, toPlace, formatPlace } from "./geocode.js";
 
 test("encodes spaces and umlauts in the query", () => {
     const url = buildGeocodeUrl("Berliner Straße");
@@ -53,4 +53,20 @@ test("toPlace keeps city and postcode from properties", () => {
     const place = toPlace(feature);
     assert.strictEqual(place.city, "Berlin");
     assert.strictEqual(place.postcode, "10119");
+});
+
+test("formatPlace shows name, postcode and city", () => {
+    const place = { lat: 52.5275, lon: 13.4139, name: "Torstraße 10", postcode: "10119", city: "Berlin" };
+    const label = formatPlace(place);
+    assert.strictEqual(label, "Torstraße 10, 10119 Berlin");
+});
+
+test("formatPlace shows name and city when postcode is missing", () => {
+    const place = { lat: 52.5, lon: 13.4, name: "Torstraße 10", city: "Berlin" };
+    assert.strictEqual(formatPlace(place), "Torstraße 10, Berlin");
+});
+
+test("formatPlace shows only the name when city is missing", () => {
+    const place = { lat: 52.5, lon: 13.4, name: "Torstraße 10" };
+    assert.strictEqual(formatPlace(place), "Torstraße 10");
 });

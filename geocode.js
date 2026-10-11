@@ -24,3 +24,12 @@ export async function searchPlaces(query) {
     const data = await response.json();
     return data.features.map(toPlace);
 }
+
+
+export function formatPlace(place) {
+    const { name, postcode, city } = place;
+    if (postcode && city) return `${name}, ${postcode} ${city}`;
+    if (city) return `${name}, ${city}`;
+    return name;
+
+}
