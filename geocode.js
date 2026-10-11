@@ -2,9 +2,17 @@ export function buildGeocodeUrl(query) {
     return `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=5&lang=de`;
 }
 
+function placeName(properties) {
+    const { name, street, housenumber } = properties;
+
+    if (name) return name;
+    if (street && housenumber) return `${street} ${housenumber}`;
+    return "Unbenannter Ort";
+}
+
 export function toPlace(feature) {
     const [lon, lat] = feature.geometry.coordinates;
-    const name = feature.properties.name ?? "Unbenannter Ort";
+    const name = placeName(feature.properties);
     return { lat, lon, name };
 }
 

@@ -19,8 +19,18 @@ test("toPlace swaps GeoJSON [lon, lat] into named lat and lon", () => {
 test("toPlace uses fallback name when properties.name is missing", () => {
     const feature = {
         geometry: { coordinates: [13.401, 52.529] },
-        properties: { street: "Torstraße", housenumber: "1" }
+        properties: { }
     };
     const place = toPlace(feature);
     assert.strictEqual(place.name, "Unbenannter Ort");
 })
+
+
+test("toPlace builds the name from street and housenumber when name is missing", () => {
+    const feature = {
+        geometry: { coordinates: [13.401, 52.529] },
+        properties: { street: "Torstraße", housenumber: "1" },
+    };
+    const place = toPlace(feature);
+    assert.strictEqual(place.name, "Torstraße 1");
+});
