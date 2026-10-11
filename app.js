@@ -33,7 +33,7 @@ searchButton.addEventListener("click", async () => {
 
     const places = await searchPlaces(query);
     renderPlaces(places);
-    showPlaces(map, places);
+    showPlaces(map, places, selectPlace);
 });
 
 /*searchButton.addEventListener("click", async () => {
