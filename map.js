@@ -8,3 +8,18 @@ export function createMap(elementId) {
 
     return map;
 }
+
+let markerLayer = null;
+
+export function showPlaces(map, places) {
+    if (markerLayer) markerLayer.remove();
+    if (places.length === 0) return;
+
+    markerLayer = L.featureGroup();
+    for (const place of places) {
+        L.marker([place.lat, place.lon]).addTo(markerLayer);
+    }
+    markerLayer.addTo(map);
+
+    map.fitBounds(markerLayer.getBounds(), { maxZoom: 15, padding: [20, 20] });
+}

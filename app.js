@@ -1,5 +1,5 @@
 import { searchPlaces, formatPlace } from "./geocode.js";
-import { createMap } from "./map.js";
+import { createMap, showPlaces } from "./map.js";
 
 const queryInput = document.getElementById("query");
 const searchButton = document.getElementById("search");
@@ -33,6 +33,7 @@ searchButton.addEventListener("click", async () => {
 
     const places = await searchPlaces(query);
     renderPlaces(places);
+    showPlaces(map, places);
 });
 
 /*searchButton.addEventListener("click", async () => {
