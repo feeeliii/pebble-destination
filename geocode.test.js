@@ -34,3 +34,12 @@ test("toPlace builds the name from street and housenumber when name is missing",
     const place = toPlace(feature);
     assert.strictEqual(place.name, "Torstraße 1");
 });
+
+test("toPlace uses the street alone when housenumber is missing", () => {
+    const feature = {
+        geometry: { coordinates: [13.401, 52.529] },
+        properties: { street: "Torstraße" },
+    };
+    const place = toPlace(feature);
+    assert.strictEqual(place.name, "Torstraße");
+});

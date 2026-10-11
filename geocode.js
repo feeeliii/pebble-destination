@@ -7,6 +7,7 @@ function placeName(properties) {
 
     if (name) return name;
     if (street && housenumber) return `${street} ${housenumber}`;
+    if (street) return street;
     return "Unbenannter Ort";
 }
 
