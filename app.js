@@ -1,4 +1,4 @@
-import { searchPlaces } from "./geocode.js";
+import { searchPlaces, formatPlace } from "./geocode.js";
 
 const queryInput = document.getElementById("query");
 const searchButton = document.getElementById("search");
@@ -10,7 +10,7 @@ let selectedDestination = null;
 
 function selectPlace(place) {
     selectedDestination = place;
-    selectedElement.textContent = `Ziel: ${place.name} (${place.lat}, ${place.lon})`;
+    selectedElement.textContent = `Ziel: ${formatPlace(place)} (${place.lat}, ${place.lon})`;
 }
 
 function renderPlaces(places) {
@@ -18,7 +18,7 @@ function renderPlaces(places) {
 
     for (const place of places) {
         const item = document.createElement("li");
-        item.textContent = `${place.name} (${place.lat}, ${place.lon})`;
+        item.textContent = formatPlace(place);
         item.addEventListener("click", () => selectPlace(place));
         resultsList.appendChild(item);
     }
