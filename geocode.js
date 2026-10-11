@@ -14,7 +14,9 @@ function placeName(properties) {
 export function toPlace(feature) {
     const [lon, lat] = feature.geometry.coordinates;
     const name = placeName(feature.properties);
-    return { lat, lon, name };
+    const postcode = feature.properties.postcode;
+    const city = feature.properties.city;
+    return { lat, lon, name, postcode, city };
 }
 
 export async function searchPlaces(query) {
