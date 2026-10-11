@@ -1,9 +1,12 @@
 import { searchPlaces, formatPlace } from "./geocode.js";
+import { createMap } from "./map.js";
 
 const queryInput = document.getElementById("query");
 const searchButton = document.getElementById("search");
 const resultsList = document.getElementById("results");
 const selectedElement = document.getElementById("selected");
+
+const map = createMap("map");
 
 let selectedDestination = null;
 
