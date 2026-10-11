@@ -4,7 +4,8 @@ export function buildGeocodeUrl(query) {
 
 export function toPlace(feature) {
     const [lon, lat] = feature.geometry.coordinates;
-    return { lat, lon, name: feature.properties.name };
+    const name = feature.properties.name ?? "Unbenannter Ort";
+    return { lat, lon, name };
 }
 
 export async function searchPlaces(query) {
