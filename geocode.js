@@ -20,11 +20,13 @@ export function toPlace(feature) {
 }
 
 export async function searchPlaces(query, fetchFn = fetch) { //heißt, dass wenn beim aufruf nichts zweiteres weitergegeben wird, wird echtes fetch mitgegeben
-    const response = await fetch(buildGeocodeUrl(query));
+    const response = await fetchFn(buildGeocodeUrl(query));
+    if (!response.ok) {
+        throw new Error(`Photon antwortete mit Status ${response.status}`);
+    }
     const data = await response.json();
     return data.features.map(toPlace);
 }
-
 
 export function formatPlace(place) {
     const { name, postcode, city } = place;

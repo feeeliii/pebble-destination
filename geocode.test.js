@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert";
-import { buildGeocodeUrl, toPlace, formatPlace } from "./geocode.js";
+import { buildGeocodeUrl, toPlace, formatPlace, searchPlaces } from "./geocode.js";
 
 test("encodes spaces and umlauts in the query", () => {
     const url = buildGeocodeUrl("Berliner Straße");
@@ -69,4 +69,13 @@ test("formatPlace shows name and city when postcode is missing", () => {
 test("formatPlace shows only the name when city is missing", () => {
     const place = { lat: 52.5, lon: 13.4, name: "Torstraße 10" };
     assert.strictEqual(formatPlace(place), "Torstraße 10");
+});
+
+
+test("searchPlaces throws a clear error when Photon answers with an error status", async () => {
+    const fakeFetch = async () => ({ ok: false, status: 503 }); //async weil searchPlaces auch async ist und wir erst auf sie warten müssen
+    await assert.rejects( // async-Funktion muss mit Fehler abbrechen + der Fehler muss genau diese Nachricht haben -> bricht sie nicht ab, oder mit einer anderen Nachricht, wird der Test rot
+        searchPlaces("Berlin", fakeFetch), // deshalb fakeFn in searchPlaces
+        { message: "Photon antwortete mit Status 503" }
+    );
 });
