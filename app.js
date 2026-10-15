@@ -32,7 +32,19 @@ searchButton.addEventListener("click", async () => {
     const query = queryInput.value.trim();
     if (query === "") return;
 
-    const places = await searchPlaces(query);
+    messageElement.textContent = `Suche läuft ...`;
+
+    let places;
+    try {
+        places = await searchPlaces(query);
+    } catch(error) {
+        console.error(error);
+        renderPlaces([]); // damit da nicht mehr die alten results stehen
+        showPlaces(map, [], selectPlace);
+        messageElement.textContent = "Suche fehlgeschlagen. Bist du online?";
+        return;
+    }
+    
     renderPlaces(places);
     showPlaces(map, places, selectPlace);
 
