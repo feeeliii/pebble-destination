@@ -19,7 +19,7 @@ export function toPlace(feature) {
     return { lat, lon, name, postcode, city };
 }
 
-export async function searchPlaces(query) {
+export async function searchPlaces(query, fetchFn = fetch) { //heißt, dass wenn beim aufruf nichts zweiteres weitergegeben wird, wird echtes fetch mitgegeben
     const response = await fetch(buildGeocodeUrl(query));
     const data = await response.json();
     return data.features.map(toPlace);
