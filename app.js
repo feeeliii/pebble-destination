@@ -5,6 +5,7 @@ const queryInput = document.getElementById("query");
 const searchButton = document.getElementById("search");
 const resultsList = document.getElementById("results");
 const selectedElement = document.getElementById("selected");
+const messageElement = document.getElementById("message");
 
 const map = createMap("map");
 
@@ -34,6 +35,13 @@ searchButton.addEventListener("click", async () => {
     const places = await searchPlaces(query);
     renderPlaces(places);
     showPlaces(map, places, selectPlace);
+
+    if (places.length === 0) {
+        messageElement.textContent = `Keine Ergebnisse für „${query}“.`;
+    } else {
+        messageElement.textContent = "";
+    }
+
 });
 
 /*searchButton.addEventListener("click", async () => {
